@@ -1,6 +1,3 @@
-The indentation got messed up. Replace the entire file with this exact content:
-
-```yaml
 name: Build APK
 
 on:
@@ -58,6 +55,5 @@ jobs:
         with:
           name: vgstudio-debug
           path: android/app/build/outputs/apk/debug/app-debug.apk
-```
-
-Select all and delete everything first, then paste this clean version and commit.
+          
+       - name:
