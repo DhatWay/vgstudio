@@ -1,3 +1,6 @@
+The indentation got messed up. Replace the entire file with this exact content:
+
+```yaml
 name: Build APK
 
 on:
@@ -40,15 +43,21 @@ jobs:
           npx cap add android
           npx cap sync android
 
-         - name: Build APK
+      - name: Clean Gradle Cache
+        run: |
+          rm -rf ~/.gradle/caches
+
+      - name: Build APK
         run: |
           cd android
           chmod +x gradlew
-          ./gradlew --stop
-       ./gradlew assembleDebug --no-daemon   -
+          ./gradlew assembleDebug --no-daemon
 
-     name: Upload APK
+      - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: vgstudio-debug
-          path: android/app/build/outputs/apk/debug/app-debug.apk    
+          path: android/app/build/outputs/apk/debug/app-debug.apk
+```
+
+Select all and delete everything first, then paste this clean version and commit.
