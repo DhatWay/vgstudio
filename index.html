@@ -718,11 +718,10 @@ body::before {
   color:var(--ink); font-family:var(--font-display);
   font-size:20px; letter-spacing:.12em;
   box-shadow:0 4px 24px var(--accentglow);
-  transition:opacity .2s, transform .18s var(--spring);
-  opacity:.4; pointer-events:none;
+  opacity:1; pointer-events:all;
+  transition:transform .18s var(--spring);
 }
-.agree-enter-btn.ready { opacity:1; pointer-events:all; }
-.agree-enter-btn.ready:active { transform:scale(.96); }
+.agree-enter-btn:active { transform:scale(.96); }
 .agree-contact-bar {
   margin-top:24px; display:flex; gap:14px; flex-wrap:wrap; justify-content:center; width:100%; max-width:480px;
 }
@@ -781,13 +780,12 @@ body::before {
       Unauthorized reproduction or distribution of these materials may result in <strong>civil and criminal penalties</strong> under 17 U.S.C. § 501 et seq.<br><br>
       This platform is provided for <strong>personal listening only</strong>. All rights reserved. © iamtheVgod / Michael Venable.
     </div>
-    <label class="agree-check-row" for="agree-cb">
-      <input type="checkbox" id="agree-cb" onchange="toggleAgree(this.checked)">
-      <span class="agree-check-label">I have read and agree to the terms above. I understand that all content is copyrighted and I will not reproduce or distribute it.</span>
-    </label>
+    <div class="agree-check-row">
+      <span class="agree-check-label" style="color:var(--white2);font-size:12px;">By tapping ENTER you agree to the terms above.</span>
+    </div>
   </div>
 
-  <button class="agree-enter-btn" id="agree-enter-btn" onclick="enterApp()">ENTER</button>
+  <button class="agree-enter-btn" id="agree-enter-btn" onclick="document.getElementById('agree-gate').style.cssText='display:none!important';">ENTER</button>
 
   <div class="agree-contact-bar" id="agree-contact-bar">
     <!-- rendered dynamically from MASTER_PROFILE -->
@@ -3907,15 +3905,18 @@ if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js').catch
 /* ─── COPYRIGHT AGREEMENT GATE ─── */
 function toggleAgree(checked) {
   const btn = document.getElementById('agree-enter-btn');
-  if (checked) btn.classList.add('ready');
-  else btn.classList.remove('ready');
+  const cb  = document.getElementById('agree-cb');
+  const isChecked = (checked !== undefined) ? checked : cb.checked;
+  if (isChecked) {
+    btn.classList.add('ready');
+  } else {
+    btn.classList.remove('ready');
+  }
 }
 function enterApp() {
   const gate = document.getElementById('agree-gate');
-  gate.style.transition = 'opacity .4s';
-  gate.style.opacity = '0';
-  setTimeout(() => { gate.classList.add('hidden'); }, 420);
-  // Remember agreement for this session only (not persisted — requires agree on every visit)
+  if (!gate) return;
+  gate.style.display = 'none';
 }
 // Check if already agreed this session
 (function() {
