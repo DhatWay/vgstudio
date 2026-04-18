@@ -7,10 +7,10 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <title>VG.STUDIO</title>
-<link rel="manifest" href="manifest.json">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,300&display=swap" rel="stylesheet">
 </head>
+
 <style>
 /* ═══════════════════════════════════════════
    COLOR THEMES  (10 unique)
@@ -664,9 +664,135 @@ body::before {
 .art-gen-option { flex:1; height:52px; border-radius:var(--r-sm); background:var(--ink4); border:1.5px solid rgba(255,255,255,0.06); display:flex; align-items:center; justify-content:center; gap:7px; font-size:12px; color:var(--white2); cursor:pointer; transition:background .15s, border-color .15s; }
 .art-gen-option.sel { background:var(--accentglow); border-color:var(--accent); color:var(--accent); }
 .art-gen-option:active { transform:scale(.97); }
+
+/* ═══════════════════════════════════════════
+   COPYRIGHT AGREEMENT GATE
+═══════════════════════════════════════════ */
+#agree-gate {
+  position:fixed; inset:0; z-index:9999;
+  background:var(--ink);
+  display:flex; flex-direction:column;
+  align-items:center; justify-content:center;
+  padding:28px 24px;
+  overflow-y:auto;
+  -webkit-overflow-scrolling:touch;
+}
+#agree-gate.hidden { display:none; }
+.agree-logo {
+  font-family:var(--font-display); font-size:36px; letter-spacing:.12em;
+  color:var(--accent); margin-bottom:4px;
+}
+.agree-logo span { color:var(--white3); font-size:22px; }
+.agree-artist-name {
+  font-family:var(--font-display); font-size:18px; letter-spacing:.1em;
+  color:var(--white2); margin-bottom:28px;
+}
+.agree-box {
+  width:100%; max-width:480px;
+  background:var(--ink3); border:1px solid rgba(255,255,255,0.08);
+  border-radius:var(--r-card); padding:24px 20px; box-shadow:var(--shadow-card);
+  margin-bottom:20px;
+}
+.agree-box-title {
+  font-family:var(--font-display); font-size:20px; letter-spacing:.1em;
+  color:var(--accent); margin-bottom:14px; text-align:center;
+}
+.agree-text {
+  font-size:12.5px; color:var(--white2); line-height:1.72;
+}
+.agree-text strong { color:var(--white); font-weight:600; }
+.agree-check-row {
+  display:flex; align-items:flex-start; gap:12px;
+  margin-top:20px; cursor:pointer;
+}
+.agree-check-row input[type=checkbox] {
+  width:20px; height:20px; flex-shrink:0; accent-color:var(--accent); cursor:pointer; margin-top:1px;
+}
+.agree-check-label {
+  font-size:12px; color:var(--white2); line-height:1.5; cursor:pointer;
+}
+.agree-enter-btn {
+  width:100%; max-width:480px;
+  height:54px; border-radius:var(--r-pill);
+  background:linear-gradient(135deg, var(--accent), var(--accent2));
+  color:var(--ink); font-family:var(--font-display);
+  font-size:20px; letter-spacing:.12em;
+  box-shadow:0 4px 24px var(--accentglow);
+  transition:opacity .2s, transform .18s var(--spring);
+  opacity:.4; pointer-events:none;
+}
+.agree-enter-btn.ready { opacity:1; pointer-events:all; }
+.agree-enter-btn.ready:active { transform:scale(.96); }
+.agree-contact-bar {
+  margin-top:24px; display:flex; gap:14px; flex-wrap:wrap; justify-content:center; width:100%; max-width:480px;
+}
+.agree-contact-link {
+  display:flex; align-items:center; gap:7px;
+  font-size:12px; color:var(--white3); text-decoration:none;
+  padding:7px 14px; border-radius:var(--r-pill);
+  background:var(--ink3); border:1px solid rgba(255,255,255,0.07);
+  transition:color .2s, border-color .2s;
+}
+.agree-contact-link:active { color:var(--accent); border-color:var(--accentglow); }
+
+/* ═══════════════════════════════════════════
+   CONTACT BAR — shown in footer of app
+═══════════════════════════════════════════ */
+#contact-footer {
+  padding:16px 20px 4px;
+  display:flex; flex-direction:column; gap:8px;
+}
+.contact-footer-title {
+  font-size:9px; letter-spacing:.2em; text-transform:uppercase;
+  color:var(--white3); font-weight:500;
+}
+.contact-footer-row {
+  display:flex; gap:10px; flex-wrap:wrap;
+}
+.contact-chip {
+  display:flex; align-items:center; gap:7px;
+  font-size:11.5px; color:var(--white2);
+  padding:8px 13px; border-radius:var(--r-pill);
+  background:var(--ink3); border:1px solid rgba(255,255,255,0.07);
+  text-decoration:none; transition:color .2s, border-color .2s, background .2s;
+  flex-shrink:0;
+}
+.contact-chip:active { color:var(--accent); border-color:var(--accentglow); background:var(--accentglow2); }
 </style>
 </head>
 <body>
+
+<!-- ████████  COPYRIGHT AGREEMENT GATE  ████████ -->
+<div id="agree-gate">
+  <div class="agree-logo">VG<span>.</span>STUDIO</div>
+  <div class="agree-artist-name">iamtheVgod · Official Music</div>
+
+  <div class="agree-box">
+    <div class="agree-box-title">⚖ Listener Agreement</div>
+    <div class="agree-text">
+      Welcome to the official music platform of <strong>iamtheVgod (Michael Venable)</strong>.<br><br>
+      All music, recordings, compositions, lyrics, artwork, and audio content available on this platform are the <strong>exclusive intellectual property</strong> of iamtheVgod / Michael Venable and are protected under applicable <strong>U.S. and international copyright law</strong>.<br><br>
+      By entering this platform, you agree that you will <strong>NOT</strong>:<br><br>
+      &nbsp;• Download, copy, reproduce, or duplicate any audio or content<br>
+      &nbsp;• Distribute, share, or re-upload any music or recordings<br>
+      &nbsp;• Use any content for commercial purposes without written permission<br>
+      &nbsp;• Sample, remix, or adapt any content without a licensed agreement<br>
+      &nbsp;• Claim ownership or co-authorship of any content on this platform<br><br>
+      Unauthorized reproduction or distribution of these materials may result in <strong>civil and criminal penalties</strong> under 17 U.S.C. § 501 et seq.<br><br>
+      This platform is provided for <strong>personal listening only</strong>. All rights reserved. © iamtheVgod / Michael Venable.
+    </div>
+    <label class="agree-check-row" for="agree-cb">
+      <input type="checkbox" id="agree-cb" onchange="toggleAgree(this.checked)">
+      <span class="agree-check-label">I have read and agree to the terms above. I understand that all content is copyrighted and I will not reproduce or distribute it.</span>
+    </label>
+  </div>
+
+  <button class="agree-enter-btn" id="agree-enter-btn" onclick="enterApp()">ENTER</button>
+
+  <div class="agree-contact-bar" id="agree-contact-bar">
+    <!-- rendered dynamically from MASTER_PROFILE -->
+  </div>
+</div>
 
 <!-- TOAST -->
 <div id="toast"><span id="t-icon">✓</span><span id="t-msg">Done</span></div>
@@ -685,7 +811,7 @@ body::before {
       </div>
     </div>
     <div class="hero">
-      <div class="hero-greeting">Good evening,</div>
+      <div class="hero-greeting" id="hero-greeting">Official Music Platform</div>
       <div class="hero-name">iam<br><em>theVgod</em></div>
       <div class="hero-sub">Your studio. Your sound. Your world.</div>
     </div>
@@ -726,6 +852,12 @@ body::before {
         <div style="padding:40px 24px;text-align:center;color:var(--white3);font-size:13px;">No tracks yet — tap <strong style="color:var(--accent)">+ Upload</strong> to get started.</div>
       </div>
     </div>
+    <!-- Contact Footer — rendered dynamically from MASTER_PROFILE -->
+    <div id="contact-footer">
+      <div class="contact-footer-title" id="contact-footer-title">Connect with iamtheVgod</div>
+      <div class="contact-footer-row" id="contact-footer-row"></div>
+    </div>
+    <div style="height:12px;"></div>
   </div><!-- /home -->
 
 
@@ -923,34 +1055,53 @@ body::before {
   <div class="page" id="pg-profile">
     <div class="topbar"><div class="logo" style="font-size:24px;">PROFILE</div></div>
     <div style="padding:0 20px;">
-      <!-- Avatar -->
+
+      <!-- Live profile card — reads from MASTER_PROFILE -->
       <div style="display:flex;flex-direction:column;align-items:center;padding:12px 0 24px;">
         <div style="position:relative;width:96px;height:96px;margin-bottom:16px;">
           <img id="prof-av" src="" alt="Avatar" style="width:96px;height:96px;border-radius:50%;object-fit:cover;background:var(--ink3);border:3px solid var(--accent);box-shadow:var(--shadow-accent);" onerror="this.style.background='var(--ink4)'">
-          <label style="position:absolute;bottom:0;right:0;width:30px;height:30px;border-radius:50%;background:var(--accent);color:var(--ink);display:flex;align-items:center;justify-content:center;font-size:13px;cursor:pointer;border:2px solid var(--ink);">
-            ✎<input type="file" accept="image/*" style="display:none" onchange="updateAvatar(this)">
-          </label>
         </div>
         <div id="prof-name-disp" style="font-family:var(--font-display);font-size:26px;letter-spacing:.08em;color:var(--accent);">ARTIST</div>
         <div id="prof-bio-disp" style="font-size:12px;color:var(--white3);margin-top:4px;">Music Artist</div>
-        <!-- Social links preview row -->
         <div id="prof-social-preview" style="display:flex;gap:10px;margin-top:14px;flex-wrap:wrap;justify-content:center;"></div>
       </div>
 
-      <div class="field-group"><label class="field-label">Display Name</label><input class="field-input" id="prof-name" placeholder="Your artist name" oninput="liveProfile()"></div>
-      <div class="field-group"><label class="field-label">Bio</label><textarea class="field-input" id="prof-bio" rows="2" placeholder="About you…"></textarea></div>
+      <!-- How-to-update notice -->
+      <div style="background:var(--accentglow2);border:1px solid var(--accentglow);border-radius:var(--r-sm);padding:14px 16px;margin-bottom:20px;">
+        <div style="font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:6px;">ℹ How to Update Your Profile</div>
+        <div style="font-size:12px;color:var(--white2);line-height:1.65;">
+          Your profile is <strong style="color:var(--white);">embedded in the source code</strong> — not stored per-user. To update what every visitor sees:<br><br>
+          1. Find the <strong style="color:var(--accent);">MASTER_PROFILE</strong> block near the top of your <code style="color:var(--accent);background:var(--ink4);padding:1px 5px;border-radius:4px;">index.html</code><br>
+          2. Edit the name, bio, avatar, or social links there<br>
+          3. Push the change to GitHub — all visitors see it immediately
+        </div>
+      </div>
+
+      <!-- Current values (read-only display) -->
+      <div class="field-group">
+        <label class="field-label">Display Name (from MASTER_PROFILE)</label>
+        <input class="field-input" id="prof-name" placeholder="Your artist name" oninput="liveProfile()" style="opacity:.7;">
+      </div>
+      <div class="field-group">
+        <label class="field-label">Bio (from MASTER_PROFILE)</label>
+        <textarea class="field-input" id="prof-bio" rows="2" placeholder="About you…" style="opacity:.7;"></textarea>
+      </div>
 
       <!-- Social Media Links -->
       <div style="margin-bottom:20px;">
-        <div class="field-label" style="margin-bottom:12px;">Social Media Links</div>
+        <div class="field-label" style="margin-bottom:12px;">Social Media Links (from MASTER_PROFILE)</div>
         <div class="settings-card">
           <div id="social-links-rows"></div>
         </div>
       </div>
 
-      <button onclick="saveProfile()" style="width:100%;height:48px;border-radius:var(--r-pill);background:linear-gradient(135deg,var(--accent),var(--accent2));color:var(--ink);font-family:var(--font-display);font-size:18px;letter-spacing:.1em;margin-bottom:28px;box-shadow:0 4px 20px var(--accentglow);">
-        SAVE PROFILE
+      <!-- Export current values button -->
+      <button onclick="exportProfileCode()" style="width:100%;height:48px;border-radius:var(--r-pill);background:linear-gradient(135deg,var(--accent),var(--accent2));color:var(--ink);font-family:var(--font-display);font-size:17px;letter-spacing:.1em;margin-bottom:12px;box-shadow:0 4px 20px var(--accentglow);">
+        📋 COPY PROFILE CODE TO CLIPBOARD
       </button>
+      <div style="font-size:11px;color:var(--white3);text-align:center;margin-bottom:28px;line-height:1.5;">
+        Copies ready-to-paste MASTER_PROFILE code with your current edits.<br>Replace the block in your index.html and push to GitHub.
+      </div>
     </div>
   </div><!-- /profile -->
 
@@ -1422,7 +1573,90 @@ body::before {
 'use strict';
 
 /* ─── STATE ─── */
-const S = {
+/* ════════════════════════════════════════════════════════
+   MASTER PROFILE — UPDATE THIS BLOCK TO UPDATE ALL USERS
+   When you change anything here and push to GitHub,
+   every visitor will see the new info immediately.
+   ════════════════════════════════════════════════════════ */
+const MASTER_PROFILE = {
+  name:    'iamtheVgod',
+  bio:     'Music Artist · All rights reserved. © Michael Venable',
+  avatar:  '',   // paste a base64 data URL here to embed your photo
+  socials: {
+    instagram: 'https://instagram.com/iamthevgod',
+    facebook:  'https://facebook.com/search/top?q=Michael+Venable',
+    spotify:   '',
+    apple:     '',
+    tiktok:    '',
+    youtube:   '',
+    soundcloud:'',
+    x:         ''
+  },
+  phone:   '(856) 295-1705'
+};
+/* ════════════════════════════════════════════════════════ */
+
+/* ════════════════════════════════════════════════════════
+   MASTER TRACKS — YOUR PERMANENT LIBRARY
+   These load for EVERY visitor automatically.
+   Add/remove tracks here and push to GitHub to update.
+   ════════════════════════════════════════════════════════ */
+const BASE_URL = 'https://dhatway.github.io/vgstudio/';
+const MASTER_TRACKS = [
+  { id:1001, title:'All These Et Ceteras',                    file:'All These Et Ceteras.mp3',                    artist:'iamtheVgod', genre:'R&B' },
+  { id:1002, title:'Betta Than Meta',                         file:'Betta Than Meta.mp3',                         artist:'iamtheVgod', genre:'Hip-Hop' },
+  { id:1003, title:'Bleachy',                                 file:'Bleachy.mp3',                                 artist:'iamtheVgod', genre:'Trap' },
+  { id:1004, title:'Breaking Through These Levels',           file:'Breaking Through These Levels.mp3',           artist:'iamtheVgod', genre:'Hip-Hop' },
+  { id:1005, title:'BussDown My BussDown',                    file:'BussDown My BussDown.mp3',                    artist:'iamtheVgod', genre:'Trap' },
+  { id:1006, title:'Calculated Losses',                       file:'Calculated Losses.mp3',                       artist:'iamtheVgod', genre:'R&B' },
+  { id:1007, title:'Chasing a Mirage',                        file:'Chasing a Mirage.mp3',                        artist:'iamtheVgod', genre:'R&B' },
+  { id:1008, title:'Check Out My Blasé (Remix)',              file:'Check Out My Blasé (Remix).mp3',              artist:'iamtheVgod', genre:'Hip-Hop' },
+  { id:1009, title:'Check Out My Blasé',                      file:'Check Out My Blasé.mp3',                      artist:'iamtheVgod', genre:'Hip-Hop' },
+  { id:1010, title:'Coachella Misfits',                       file:'Coachella Misfits.mp3',                       artist:'iamtheVgod', genre:'Trap-Soul' },
+  { id:1011, title:'Coachella Misfits (Remix)',               file:'Coachella Misfits (Remix).mp3',               artist:'iamtheVgod', genre:'Trap-Soul' },
+  { id:1012, title:'Dead Pixels',                             file:'Dead Pixels.mp3',                             artist:'iamtheVgod', genre:'Hip-Hop' },
+  { id:1013, title:'Empty Promises',                          file:'Empty Promises.mp3',                          artist:'iamtheVgod', genre:'R&B' },
+  { id:1014, title:'Empty Promises (Remix)',                  file:'Empty Promises (Remix).mp3',                  artist:'iamtheVgod', genre:'R&B' },
+  { id:1015, title:'FLOAT',                                   file:'FLOAT.mp3',                                   artist:'iamtheVgod', genre:'Trap-Soul' },
+  { id:1016, title:'Foreign Secrets',                         file:'Foreign Secrets.mp3',                         artist:'iamtheVgod', genre:'R&B' },
+  { id:1017, title:'Foreign Secrets (Remix)',                 file:'Foreign Secrets (Remix).mp3',                 artist:'iamtheVgod', genre:'R&B' },
+  { id:1018, title:'Friend Zoned',                            file:'Friend Zoned.mp3',                            artist:'iamtheVgod', genre:'R&B' },
+  { id:1019, title:'Go Get Your Shovel',                      file:'Go Get Your Shovel.mp3',                      artist:'iamtheVgod', genre:'Hip-Hop' },
+  { id:1020, title:'Gravity Pull',                            file:'Gravity Pull.mp3',                            artist:'iamtheVgod', genre:'Trap-Soul' },
+  { id:1021, title:'Help Me Out',                             file:'Help Me Out.mp3',                             artist:'iamtheVgod', genre:'R&B' },
+  { id:1022, title:'High Rise Life Setting In',               file:'High Rise Life Setting In.mp3',               artist:'iamtheVgod', genre:'Hip-Hop' },
+  { id:1023, title:'High Rise Life Setting In (Remix)',       file:'High Rise Life Setting In (Remix).mp3',       artist:'iamtheVgod', genre:'Hip-Hop' },
+  { id:1024, title:"I'm Misbehaving",                         file:"I'm Misbehaving.mp3",                         artist:'iamtheVgod', genre:'Trap' },
+  { id:1025, title:'Less is More',                            file:'Less is More.mp3',                            artist:'iamtheVgod', genre:'R&B' },
+  { id:1026, title:"Let's Be Real",                           file:"Let's Be Real.mp3",                           artist:'iamtheVgod', genre:'R&B' },
+  { id:1027, title:'Lonely Summers in Miami',                 file:'Lonely Summers in Miami.mp3',                 artist:'iamtheVgod', genre:'Trap-Soul' },
+  { id:1028, title:'Lonely Summers in Miami (Remix)',         file:'Lonely Summers in Miami (Remix).mp3',         artist:'iamtheVgod', genre:'Trap-Soul' },
+  { id:1029, title:'Man Bait (Remix)',                        file:'Man Bait (Remix).mp3',                        artist:'iamtheVgod', genre:'Trap' },
+  { id:1030, title:'Man Bait',                                file:'Man Bait.mp3',                                artist:'iamtheVgod', genre:'Trap' },
+  { id:1031, title:'Marbled (Remix)',                         file:'Marbled (Remix).mp3',                         artist:'iamtheVgod', genre:'R&B' },
+  { id:1032, title:'Marbled',                                 file:'Marbled.mp3',                                 artist:'iamtheVgod', genre:'R&B' },
+  { id:1033, title:'Moonlit Beaches',                         file:'Moonlit Beaches.mp3',                         artist:'iamtheVgod', genre:'Trap-Soul' },
+  { id:1034, title:'Moonlit Beaches (Remix)',                 file:'Moonlit Beaches (Remix).mp3',                 artist:'iamtheVgod', genre:'Trap-Soul' },
+  { id:1035, title:'My Drip Make Waves',                      file:'My Drip Make Waves.mp3',                      artist:'iamtheVgod', genre:'Trap' },
+  { id:1036, title:'My Drop Top Bae',                         file:'My Drop Top Bae.mp3',                         artist:'iamtheVgod', genre:'Trap-Soul' },
+  { id:1037, title:'Satin on Her Skin Orgasmic',              file:'Satin on Her Skin Orgasmic.mp3',              artist:'iamtheVgod', genre:'R&B' },
+  { id:1038, title:'Satin on Her Skin Orgasmic (Remix)',      file:'Satin on Her Skin Orgasmic (Remix).mp3',      artist:'iamtheVgod', genre:'R&B' },
+  { id:1039, title:'Signal Lost',                             file:'Signal Lost.mp3',                             artist:'iamtheVgod', genre:'Hip-Hop' },
+  { id:1040, title:'Side Quest',                              file:'Side Quest.mp3',                              artist:'iamtheVgod', genre:'Hip-Hop' },
+  { id:1041, title:'Slow Burn Saint',                         file:'Slow Burn Saint.mp3',                         artist:'iamtheVgod', genre:'Trap-Soul' },
+  { id:1042, title:'Stanje',                                  file:'Stanje.mp3',                                  artist:'iamtheVgod', genre:'R&B' },
+  { id:1043, title:'Static',                                  file:'Static.mp3',                                  artist:'iamtheVgod', genre:'Hip-Hop' },
+  { id:1044, title:'Stranded',                                file:'Stranded.mp3',                                artist:'iamtheVgod', genre:'Trap-Soul' },
+  { id:1045, title:'Swavey',                                  file:'Swavey.mp3',                                  artist:'iamtheVgod', genre:'Trap' },
+  { id:1046, title:'Tell Me Your Love Language (Remix)',      file:'Tell Me Your Love Language (Remix).mp3',      artist:'iamtheVgod', genre:'R&B' },
+  { id:1047, title:'Tell Me Your Love Language',              file:'Tell Me Your Love Language.mp3',              artist:'iamtheVgod', genre:'R&B' },
+  { id:1048, title:'That Lunch Box Full',                     file:'That Lunch Box Full.mp3',                     artist:'iamtheVgod', genre:'Trap' },
+  { id:1049, title:'The Ghost of You',                        file:'The Ghost of You.mp3',                        artist:'iamtheVgod', genre:'R&B' },
+  { id:1050, title:'Try Ride My Wave and Get Wiped Out',      file:'Try Ride My Wave and Get Wiped Out.mp3',      artist:'iamtheVgod', genre:'Hip-Hop' },
+  { id:1051, title:'We Ain\'t Phony Kickin it',               file:"We Ain't Phony Kickin it.mp3",                artist:'iamtheVgod', genre:'Hip-Hop' },
+  { id:1052, title:'Your Loss My Lesson',                     file:'Your Loss My Lesson.mp3',                     artist:'iamtheVgod', genre:'R&B' },
+];
+/* ════════════════════════════════════════════════════════ */
   tracks: [],
   playlists: [],
   videos: [],
@@ -1434,7 +1668,7 @@ const S = {
   boosted: false,
   plays: 0,
   shares: 0,
-  profile: { name:'', bio:'', avatar:'', socials:{} },
+  profile: {},
   settings: {
     theme:'gold', nightMode:true, grain:true, ambient:true,
     crossfade:false, autoplay:true,
@@ -1624,6 +1858,7 @@ function init() {
   renderLibrary();
   loadProfile();
   buildSocialLinksUI();
+  renderContactLinks();
   applyTheme(S.settings.theme, false);
   applyNightMode(S.settings.nightMode !== false, false);
   applyGrain(S.settings.grain, false);
@@ -2296,7 +2531,7 @@ async function doUpload() {
   let artUrl=pendingCoverURL||null;
   if(!artUrl)artUrl=genCanvasArt(title,artist);
   const tags=await genTags(title,artist,'');
-  const trackId = Date.now();
+  const trackId = Math.max(Date.now(), 2000000000);
   // Save audio blob to IndexedDB for persistent storage
   try { await idbSaveAudio(trackId, pendingAudio); } catch(e) { console.warn('IDB save failed', e); }
   const track={id:trackId,title,artist,tags,url:pendingAudioURL,art:artUrl,genre:tags[0]||'',dur:durStr,addedAt:new Date().toISOString()};
@@ -2339,37 +2574,131 @@ function resetUploadForm(){
 }
 
 /* ─── PROFILE ─── */
+
+// SVG icons for contact rendering
+const SOCIAL_SVGS = {
+  instagram: `<svg viewBox="0 0 24 24" width="15" height="15" xmlns="http://www.w3.org/2000/svg"><defs><radialGradient id="ig_d" cx="30%" cy="107%" r="150%"><stop offset="0%" stop-color="#fdf497"/><stop offset="45%" stop-color="#fd5949"/><stop offset="60%" stop-color="#d6249f"/><stop offset="90%" stop-color="#285AEB"/></radialGradient></defs><rect width="24" height="24" rx="5.5" fill="url(#ig_d)"/><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="white" stroke-width="1.6"/><circle cx="12" cy="12" r="4.2" fill="none" stroke="white" stroke-width="1.6"/><circle cx="17.5" cy="6.5" r="1.1" fill="white"/></svg>`,
+  facebook:  `<svg viewBox="0 0 24 24" width="15" height="15"><rect width="24" height="24" rx="5.5" fill="#1877F2"/><path fill="white" d="M16 8h-2a1 1 0 0 0-1 1v2h3l-.5 3H13v7h-3v-7H8v-3h2V9a4 4 0 0 1 4-4h2v3z"/></svg>`,
+  spotify:   `<svg viewBox="0 0 24 24" width="15" height="15"><rect width="24" height="24" rx="5.5" fill="#1DB954"/><path fill="white" d="M12 5a7 7 0 1 0 0 14A7 7 0 0 0 12 5zm3.2 10.1c-.2.3-.5.4-.8.2-2.1-1.3-4.8-1.6-7.9-.9-.3.1-.6-.1-.7-.4-.1-.3.1-.6.4-.7 3.4-.8 6.4-.4 8.8 1 .3.2.4.5.2.8zm.9-2.5c-.2.4-.6.5-1 .2-2.4-1.5-6.1-1.9-9-.1-.3.1-.7 0-.9-.3-.1-.3 0-.7.3-.9 3.3-1.9 7.4-1.5 10.2.1.4.2.5.6.4 1zm.1-2.6c-2.9-1.7-7.6-1.9-10.3-1-.4.1-.8-.1-.9-.5-.1-.4.1-.8.5-.9 3.1-.9 8.2-.7 11.4 1.2.3.2.5.6.3 1-.2.3-.6.4-1 .2z"/></svg>`,
+  tiktok:    `<svg viewBox="0 0 24 24" width="15" height="15"><rect width="24" height="24" rx="5.5" fill="#010101"/><path fill="white" d="M17.5 6.3a4.1 4.1 0 0 1-2.5-1.8V13a3.5 3.5 0 1 1-2.5-3.35v2.1a1.5 1.5 0 1 0 1 1.42V4h2a4.1 4.1 0 0 0 2 2.3z"/></svg>`,
+  youtube:   `<svg viewBox="0 0 24 24" width="15" height="15"><rect width="24" height="24" rx="5.5" fill="#FF0000"/><path fill="white" d="M19.6 7.8s-.2-1.4-.8-1.9c-.8-.8-1.7-.8-2.1-.9C14.4 4.8 12 4.8 12 4.8s-2.4 0-4.7.2c-.4 0-1.3.1-2.1.9-.6.5-.8 1.9-.8 1.9S4.2 9.3 4.2 10.8v1.4c0 1.5.2 3 .2 3s.2 1.4.8 1.9c.8.8 1.8.8 2.3.8C8.9 18 12 18 12 18s2.4 0 4.7-.2c.4 0 1.3-.1 2.1-.9.6-.5.8-1.9.8-1.9s.2-1.5.2-3v-1.4c0-1.5-.2-2.8-.2-2.8zM10.2 14v-4.2l4.4 2.1-4.4 2.1z"/></svg>`,
+  soundcloud:`<svg viewBox="0 0 24 24" width="15" height="15"><rect width="24" height="24" rx="5.5" fill="#FF5500"/><path fill="white" d="M3 13.5c0 1.1.9 2 2 2h11a2 2 0 0 0 0-4c-.1 0-.2 0-.3.01A4 4 0 0 0 8 10.5c0 .18.01.36.04.53A2 2 0 0 0 5 13.5z"/></svg>`,
+  x:         `<svg viewBox="0 0 24 24" width="15" height="15"><rect width="24" height="24" rx="5.5" fill="#000"/><path fill="white" d="M17.5 4h2.5l-5.5 6.3L21 20h-4.7l-3.6-4.7L8.2 20H5.7l5.9-6.7L4 4h4.8l3.3 4.3zm-.9 14.4h1.4L7.5 5.5H6z"/></svg>`,
+  phone:     `<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.4 2 2 0 0 1 3.6 1.22h3a2 2 0 0 1 2 1.72c.13 1 .37 1.97.72 2.91a2 2 0 0 1-.45 2.11L7.91 9a16 16 0 0 0 6.09 6.09l.96-.96a2 2 0 0 1 2.11-.45c.94.35 1.91.59 2.91.72a2 2 0 0 1 1.72 2.02z"/></svg>`
+};
+
+function renderContactLinks() {
+  const mp = MASTER_PROFILE;
+  // Build chip items
+  const chips = [];
+  if (mp.socials.instagram) chips.push({ href: mp.socials.instagram, icon: SOCIAL_SVGS.instagram, label: '@' + mp.socials.instagram.replace(/.*instagram\.com\//,'').replace(/\?.*/,'') });
+  if (mp.socials.facebook)  chips.push({ href: mp.socials.facebook,  icon: SOCIAL_SVGS.facebook,  label: 'Facebook' });
+  if (mp.socials.spotify)   chips.push({ href: mp.socials.spotify,   icon: SOCIAL_SVGS.spotify,   label: 'Spotify' });
+  if (mp.socials.tiktok)    chips.push({ href: mp.socials.tiktok,    icon: SOCIAL_SVGS.tiktok,    label: 'TikTok' });
+  if (mp.socials.youtube)   chips.push({ href: mp.socials.youtube,   icon: SOCIAL_SVGS.youtube,   label: 'YouTube' });
+  if (mp.socials.soundcloud)chips.push({ href: mp.socials.soundcloud,icon: SOCIAL_SVGS.soundcloud,label: 'SoundCloud' });
+  if (mp.socials.x)         chips.push({ href: mp.socials.x,         icon: SOCIAL_SVGS.x,         label: 'X / Twitter' });
+  if (mp.phone)             chips.push({ href: 'tel:' + mp.phone.replace(/\D/g,''), icon: SOCIAL_SVGS.phone, label: mp.phone });
+
+  const html = chips.map(c => `<a class="contact-chip" href="${escHtml(c.href)}" target="_blank">${c.icon}${escHtml(c.label)}</a>`).join('');
+
+  // Update footer on home page
+  const row = document.getElementById('contact-footer-row');
+  const title = document.getElementById('contact-footer-title');
+  if (row) row.innerHTML = html;
+  if (title) title.textContent = 'Connect with ' + mp.name;
+
+  // Update agree gate contact bar
+  const agreeBar = document.getElementById('agree-contact-bar');
+  if (agreeBar) {
+    agreeBar.innerHTML = chips.map(c =>
+      `<a class="agree-contact-link" href="${escHtml(c.href)}" target="_blank">${c.icon.replace('width="15"','width="16"').replace('height="15"','height="16"')}${escHtml(c.label)}</a>`
+    ).join('');
+  }
+}
+
 function loadProfile() {
-  const p=S.profile;
-  document.getElementById('prof-name').value=p.name||'';
-  document.getElementById('prof-bio').value=p.bio||'';
-  document.getElementById('prof-name-disp').textContent=p.name||'ARTIST';
-  document.getElementById('prof-bio-disp').textContent=p.bio||'Music Artist';
-  if(p.avatar)document.getElementById('prof-av').src=p.avatar;
+  const p = S.profile;  // Already set from MASTER_PROFILE by load()
+  document.getElementById('prof-name').value = p.name || '';
+  document.getElementById('prof-bio').value  = p.bio  || '';
+  document.getElementById('prof-name-disp').textContent = p.name || 'ARTIST';
+  document.getElementById('prof-bio-disp').textContent  = p.bio  || 'Music Artist';
+  if (p.avatar) document.getElementById('prof-av').src = p.avatar;
   // Populate social inputs
   SOCIAL_PLATFORMS_PROFILE.forEach(sp => {
     const inp = document.getElementById(`social-${sp.key}`);
     if (inp && p.socials) inp.value = p.socials[sp.key] || '';
   });
   renderSocialPreview();
+  renderContactLinks();
 }
-function liveProfile(){document.getElementById('prof-name-disp').textContent=document.getElementById('prof-name').value||'ARTIST';}
+
+function liveProfile() {
+  document.getElementById('prof-name-disp').textContent = document.getElementById('prof-name').value || 'ARTIST';
+}
+
 function saveProfile() {
-  S.profile.name=document.getElementById('prof-name').value.trim();
-  S.profile.bio=document.getElementById('prof-bio').value.trim();
-  S.profile.socials=S.profile.socials||{};
+  // Update in-memory profile from form fields
+  S.profile.name = document.getElementById('prof-name').value.trim();
+  S.profile.bio  = document.getElementById('prof-bio').value.trim();
+  S.profile.socials = S.profile.socials || {};
   SOCIAL_PLATFORMS_PROFILE.forEach(sp => {
-    const inp=document.getElementById(`social-${sp.key}`);
-    if(inp) S.profile.socials[sp.key]=inp.value.trim();
+    const inp = document.getElementById(`social-${sp.key}`);
+    if (inp) S.profile.socials[sp.key] = inp.value.trim();
   });
-  document.getElementById('prof-name-disp').textContent=S.profile.name||'ARTIST';
-  document.getElementById('prof-bio-disp').textContent=S.profile.bio||'Music Artist';
+  document.getElementById('prof-name-disp').textContent = S.profile.name || 'ARTIST';
+  document.getElementById('prof-bio-disp').textContent  = S.profile.bio  || 'Music Artist';
   renderSocialPreview();
-  save(); toast('✓','Profile saved');
+  renderContactLinks();
+  save();
+  toast('✓', 'Profile saved locally — push code change to update all visitors');
 }
-function updateAvatar(input){
-  const f=input.files[0];if(!f)return;
-  const r=new FileReader();r.onload=e=>{S.profile.avatar=e.target.result;document.getElementById('prof-av').src=e.target.result;save();toast('✓','Avatar updated');};
+
+function exportProfileCode() {
+  const name    = document.getElementById('prof-name').value.trim() || MASTER_PROFILE.name;
+  const bio     = document.getElementById('prof-bio').value.trim()  || MASTER_PROFILE.bio;
+  const socials = {};
+  SOCIAL_PLATFORMS_PROFILE.forEach(sp => {
+    const inp = document.getElementById(`social-${sp.key}`);
+    socials[sp.key] = inp ? inp.value.trim() : (MASTER_PROFILE.socials[sp.key] || '');
+  });
+  const phoneInp = document.querySelector('#prof-phone-inp');
+  const phone = phoneInp ? phoneInp.value.trim() : MASTER_PROFILE.phone;
+
+  const code = `const MASTER_PROFILE = {
+  name:    '${name.replace(/'/g,"\\'")}',
+  bio:     '${bio.replace(/'/g,"\\'")}',
+  avatar:  '${(S.profile.avatar||'').length > 200 ? '/* base64 image — keep your existing value */' : ''}',
+  socials: {
+    instagram:  '${(socials.instagram||'').replace(/'/g,"\\'")}',
+    facebook:   '${(socials.facebook||'').replace(/'/g,"\\'")}',
+    spotify:    '${(socials.spotify||'').replace(/'/g,"\\'")}',
+    apple:      '${(socials.apple||'').replace(/'/g,"\\'")}',
+    tiktok:     '${(socials.tiktok||'').replace(/'/g,"\\'")}',
+    youtube:    '${(socials.youtube||'').replace(/'/g,"\\'")}',
+    soundcloud: '${(socials.soundcloud||'').replace(/'/g,"\\'")}',
+    x:          '${(socials.x||'').replace(/'/g,"\\'")}',
+  },
+  phone:   '${(MASTER_PROFILE.phone).replace(/'/g,"\\'")}',
+};`;
+
+  navigator.clipboard.writeText(code).then(() => {
+    toast('📋', 'Profile code copied! Paste into index.html → push to GitHub');
+  }).catch(() => {
+    // Fallback: show in a prompt
+    prompt('Copy this code, paste into index.html, push to GitHub:', code);
+  });
+}
+
+function updateAvatar(input) {
+  const f = input.files[0]; if (!f) return;
+  const r = new FileReader();
+  r.onload = e => {
+    S.profile.avatar = e.target.result;
+    document.getElementById('prof-av').src = e.target.result;
+    save();
+    toast('✓', 'Avatar updated locally — use 📋 Copy Profile Code to embed it permanently');
+  };
   r.readAsDataURL(f);
 }
 function buildSocialLinksUI() {
@@ -2377,7 +2706,7 @@ function buildSocialLinksUI() {
   container.innerHTML = SOCIAL_PLATFORMS_PROFILE.map(sp => `
     <div class="social-link-row">
       <div class="social-link-icon" style="background:${sp.color||'var(--ink4)'};">${sp.svg}</div>
-      <input class="social-link-input" id="social-${sp.key}" type="url" placeholder="${sp.placeholder}" value="">
+      <input class="social-link-input" id="social-${sp.key}" type="url" placeholder="${sp.placeholder}" value="${escHtml(MASTER_PROFILE.socials[sp.key]||'')}">
     </div>`).join('');
 }
 function renderSocialPreview() {
@@ -2424,12 +2753,43 @@ function load() {
   try {
     const raw = localStorage.getItem('vgs2'); if (!raw) return;
     const d = JSON.parse(raw); Object.assign(S, d);
-    if (!S.profile.socials) S.profile.socials = {};
     if (!S.settings) S.settings = {theme:'gold',nightMode:true,grain:true,ambient:true,crossfade:false,autoplay:true,homeLayout:{stats:true,featured:true,library:true}};
     if (!S.settings.homeLayout) S.settings.homeLayout = {stats:true,featured:true,library:true};
     S.tracks.forEach(t => { if (t.url === '__blob__') t.url = null; });
     if (!S.trackEQ) S.trackEQ = {};
   } catch(e) {}
+
+  // ── ALWAYS apply MASTER_PROFILE ──
+  S.profile = {
+    ...MASTER_PROFILE,
+    socials: { ...MASTER_PROFILE.socials }
+  };
+
+  // ── ALWAYS inject MASTER_TRACKS ──
+  // Build a map of user-uploaded tracks (id >= 2000) to preserve them
+  const userTracks = (S.tracks || []).filter(t => t.id >= 2000);
+  // Convert MASTER_TRACKS to full track objects with GitHub URLs
+  const masterTrackObjects = MASTER_TRACKS.map(t => {
+    const url = BASE_URL + encodeURIComponent(t.file);
+    // Reuse existing art if already generated for this id
+    const existing = (S.tracks || []).find(e => e.id === t.id);
+    const art = existing?.art || genCanvasArt(t.title, t.artist);
+    return {
+      id:       t.id,
+      title:    t.title,
+      artist:   t.artist,
+      genre:    t.genre,
+      tags:     [t.genre, 'iamtheVgod'],
+      url:      url,
+      art:      art,
+      dur:      '—',
+      addedAt:  '2025-01-01T00:00:00.000Z',
+      _master:  true
+    };
+  });
+  // Master tracks first, then any user-uploaded tracks
+  S.tracks = [...masterTrackObjects, ...userTracks];
+
   updateStats();
 }
 
@@ -3515,7 +3875,7 @@ async function importFilesArray(files, statusEl) {
     let tags = [];
     try { tags = await genTags(title, artist, ''); } catch(e) { tags = ['Music']; }
 
-    const trackId = Date.now() + imported;
+    const trackId = Math.max(Date.now(), 2000000000) + imported;
 
     // Save audio blob to IndexedDB for persistent storage
     try { await idbSaveAudio(trackId, file); } catch(e) { console.warn('IDB save failed', e); }
@@ -3543,6 +3903,25 @@ async function importFilesArray(files, statusEl) {
 
 /* ─── SERVICE WORKER ─── */
 if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js').catch(()=>{});}
+
+/* ─── COPYRIGHT AGREEMENT GATE ─── */
+function toggleAgree(checked) {
+  const btn = document.getElementById('agree-enter-btn');
+  if (checked) btn.classList.add('ready');
+  else btn.classList.remove('ready');
+}
+function enterApp() {
+  const gate = document.getElementById('agree-gate');
+  gate.style.transition = 'opacity .4s';
+  gate.style.opacity = '0';
+  setTimeout(() => { gate.classList.add('hidden'); }, 420);
+  // Remember agreement for this session only (not persisted — requires agree on every visit)
+}
+// Check if already agreed this session
+(function() {
+  // Gate always shows on fresh load — agreement is per-session
+  // No auto-dismiss so every visitor must agree
+})();
 
 /* ─── GO ─── */
 init();
