@@ -1,17 +1,20 @@
 {
-  "name": "VG Studio",
+  "name": "VG.STUDIO",
   "short_name": "VG.STUDIO",
+  "description": "iamthevgod — Official Music Platform",
   "start_url": "/vgstudio/",
+  "scope": "/vgstudio/",
   "display": "standalone",
-  "background_color": "#060608",
-  "theme_color": "#c9a84c",
   "orientation": "portrait",
+  "background_color": "#060608",
+  "theme_color": "#060608",
   "icons": [
     {
-"src": "/vgstudio/192×192.png",
+      "src": "192×192.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any maskable"
     }
-  ]
+  ],
+  "categories": ["music", "entertainment"]
 }
