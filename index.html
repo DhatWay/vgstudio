@@ -1555,7 +1555,7 @@ body::before {
 </div>
 
 <!-- AUDIO -->
-<audio id="aud" preload="metadata"></audio>
+<audio id="aud" preload="metadata" crossorigin="anonymous"></audio>
 
 <!-- Particle canvas (trendy) -->
 <canvas id="particle-canvas"></canvas>
@@ -1762,6 +1762,70 @@ function navigate(pageId, navId) {
   if (pageId === 'pg-videos') renderVideos();
 }
 
+/* ═══════════════════════════════════════════
+   PRELOADED CATALOG — all tracks from GitHub
+═══════════════════════════════════════════ */
+const PRELOADED_TRACKS = [
+  {title:'Check Out My Blasé (Remix)', artist:'iamthevgod', genre:'', art:'', url:'https://dhatway.github.io/vgstudio/Check%20Out%20My%20Blas%C3%A9%20%28Remix%29.mp3', dur:'', plays:0, liked:false},
+  {title:'Check Out My Blasé', artist:'iamthevgod', genre:'', art:'', url:'https://dhatway.github.io/vgstudio/Check%20Out%20My%20Blas%C3%A9.mp3', dur:'', plays:0, liked:false},
+  {title:'Coachella Misfits (Remix)', artist:'iamthevgod', genre:'', art:'', url:'https://dhatway.github.io/vgstudio/Coachella%20Misfits%20%28Remix%29.mp3', dur:'', plays:0, liked:false},
+  {title:'Coachella Misfits', artist:'iamthevgod', genre:'', art:'', url:'https://dhatway.github.io/vgstudio/Coachella%20Misfits.mp3', dur:'', plays:0, liked:false},
+  {title:'Dead Pixels', artist:'iamthevgod', genre:'', art:'', url:'https://dhatway.github.io/vgstudio/Dead%20Pixels.mp3', dur:'', plays:0, liked:false},
+  {title:'Empty Promises (Remix)', artist:'iamthevgod', genre:'', art:'', url:'https://dhatway.github.io/vgstudio/Empty%20Promises%20%28Remix%29.mp3', dur:'', plays:0, liked:false},
+  {title:'Empty Promises', artist:'iamthevgod', genre:'', art:'', url:'https://dhatway.github.io/vgstudio/Empty%20Promises.mp3', dur:'', plays:0, liked:false},
+  {title:'FLOAT', artist:'iamthevgod', genre:'', art:'', url:'https://dhatway.github.io/vgstudio/FLOAT.mp3', dur:'', plays:0, liked:false},
+  {title:'Foreign Secrets (Remix)', artist:'iamthevgod', genre:'', art:'', url:'https://dhatway.github.io/vgstudio/Foreign%20Secrets%20%28Remix%29.mp3', dur:'', plays:0, liked:false},
+  {title:'Foreign Secrets', artist:'iamthevgod', genre:'', art:'', url:'https://dhatway.github.io/vgstudio/Foreign%20Secrets.mp3', dur:'', plays:0, liked:false},
+  {title:'Friend Zoned 2', artist:'iamthevgod', genre:'', art:'', url:'https://dhatway.github.io/vgstudio/Friend%20Zoned%202.mp3', dur:'', plays:0, liked:false},
+  {title:'Ghost Money', artist:'iamthevgod', genre:'', art:'', url:'https://dhatway.github.io/vgstudio/Ghost%20Money.mp3', dur:'', plays:0, liked:false},
+  {title:'Go Get Ya Shovel', artist:'iamthevgod', genre:'', art:'', url:'https://dhatway.github.io/vgstudio/Go%20Get%20Ya%20Shovel.mp3', dur:'', plays:0, liked:false},
+  {title:'Gravity Pull', artist:'iamthevgod', genre:'', art:'', url:'https://dhatway.github.io/vgstudio/Gravity%20Pull.mp3', dur:'', plays:0, liked:false},
+  {title:'Help Me Out', artist:'iamthevgod', genre:'', art:'', url:'https://dhatway.github.io/vgstudio/Help%20Me%20Out.mp3', dur:'', plays:0, liked:false},
+  {title:'High Rise Life Setting In (Remix)', artist:'iamthevgod', genre:'', art:'', url:'https://dhatway.github.io/vgstudio/High%20Rise%20Life%20Setting%20In%20%28Remix%29.mp3', dur:'', plays:0, liked:false},
+  {title:'High Rise Life Setting In', artist:'iamthevgod', genre:'', art:'', url:'https://dhatway.github.io/vgstudio/High%20Rise%20Life%20Setting%20In.mp3', dur:'', plays:0, liked:false},
+  {title:"I'm Misbehaving", artist:'iamthevgod', genre:'', art:'', url:'https://dhatway.github.io/vgstudio/I%27m%20Misbehaving.mp3', dur:'', plays:0, liked:false},
+  {title:'Less Is More', artist:'iamthevgod', genre:'', art:'', url:'https://dhatway.github.io/vgstudio/Less%20Is%20More.mp3', dur:'', plays:0, liked:false},
+  {title:"Let's Be Real", artist:'iamthevgod', genre:'', art:'', url:'https://dhatway.github.io/vgstudio/Let%27s%20Be%20Real.mp3', dur:'', plays:0, liked:false},
+  {title:'Lonely Summers in Miami (Remix)', artist:'iamthevgod', genre:'', art:'', url:'https://dhatway.github.io/vgstudio/Lonely%20Summers%20in%20Miami%20%28Remix%29.mp3', dur:'', plays:0, liked:false},
+  {title:'Lonely Summers in Miami', artist:'iamthevgod', genre:'', art:'', url:'https://dhatway.github.io/vgstudio/Lonely%20Summers%20in%20Miami.mp3', dur:'', plays:0, liked:false},
+  {title:'Man Bait (Remix)', artist:'iamthevgod', genre:'', art:'', url:'https://dhatway.github.io/vgstudio/Man%20Bait%20%28Remix%29.mp3', dur:'', plays:0, liked:false},
+  {title:'Man Bait', artist:'iamthevgod', genre:'', art:'', url:'https://dhatway.github.io/vgstudio/Man%20Bait.mp3', dur:'', plays:0, liked:false},
+  {title:'Marbled (Remix)', artist:'iamthevgod', genre:'', art:'', url:'https://dhatway.github.io/vgstudio/Marbled%20%28Remix%29.mp3', dur:'', plays:0, liked:false},
+  {title:'Marbled', artist:'iamthevgod', genre:'', art:'', url:'https://dhatway.github.io/vgstudio/Marbled.mp3', dur:'', plays:0, liked:false},
+  {title:'Moonlit Beaches (remix)', artist:'iamthevgod', genre:'', art:'', url:'https://dhatway.github.io/vgstudio/Moonlit%20Beaches%20%28remix%29.mp3', dur:'', plays:0, liked:false},
+  {title:'Moonlit Beaches', artist:'iamthevgod', genre:'', art:'', url:'https://dhatway.github.io/vgstudio/Moonlit%20Beaches.mp3', dur:'', plays:0, liked:false},
+  {title:'My Drip Make Waves', artist:'iamthevgod', genre:'', art:'', url:'https://dhatway.github.io/vgstudio/My%20Drip%20Make%20Waves.mp3', dur:'', plays:0, liked:false},
+  {title:'My Drop Top Bae', artist:'iamthevgod', genre:'', art:'', url:'https://dhatway.github.io/vgstudio/My%20Drop%20Top%20Bae.mp3', dur:'', plays:0, liked:false},
+  {title:"Satin on Her Skin's Orgasmic (remix)", artist:'iamthevgod', genre:'', art:'', url:'https://dhatway.github.io/vgstudio/Satin%20on%20Her%20Skin%27s%20Orgasmic%20%28remix%29.mp3', dur:'', plays:0, liked:false},
+  {title:"Satin on Her Skin's Orgasmic", artist:'iamthevgod', genre:'', art:'', url:'https://dhatway.github.io/vgstudio/Satin%20on%20Her%20Skin%27s%20Orgasmic.mp3', dur:'', plays:0, liked:false},
+  {title:'She My Droptop Bae', artist:'iamthevgod', genre:'', art:'', url:'https://dhatway.github.io/vgstudio/She%20My%20Droptop%20Bae.mp3', dur:'', plays:0, liked:false},
+  {title:'Side Quest 2', artist:'iamthevgod', genre:'', art:'', url:'https://dhatway.github.io/vgstudio/Side%20Quest%202.mp3', dur:'', plays:0, liked:false},
+  {title:'Signal Lost', artist:'iamthevgod', genre:'', art:'', url:'https://dhatway.github.io/vgstudio/Signal%20Lost.mp3', dur:'', plays:0, liked:false},
+  {title:'Slow Burn Saint', artist:'iamthevgod', genre:'', art:'', url:'https://dhatway.github.io/vgstudio/Slow%20Burn%20Saint.mp3', dur:'', plays:0, liked:false},
+  {title:'Static', artist:'iamthevgod', genre:'', art:'', url:'https://dhatway.github.io/vgstudio/Static.mp3', dur:'', plays:0, liked:false},
+  {title:'Stranded', artist:'iamthevgod', genre:'', art:'', url:'https://dhatway.github.io/vgstudio/Stranded.mp3', dur:'', plays:0, liked:false},
+  {title:'Stranje', artist:'iamthevgod', genre:'', art:'', url:'https://dhatway.github.io/vgstudio/Stranje.mp3', dur:'', plays:0, liked:false},
+  {title:'Swavey', artist:'iamthevgod', genre:'', art:'', url:'https://dhatway.github.io/vgstudio/Swavey.mp3', dur:'', plays:0, liked:false},
+  {title:'Tell Me Your Love Language (Remix)', artist:'iamthevgod', genre:'', art:'', url:'https://dhatway.github.io/vgstudio/Tell%20Me%20Your%20Love%20Language%20%28Remix%29.mp3', dur:'', plays:0, liked:false},
+  {title:'That Lunch Box Full', artist:'iamthevgod', genre:'', art:'', url:'https://dhatway.github.io/vgstudio/That%20Lunch%20Box%20Full.mp3', dur:'', plays:0, liked:false},
+  {title:'The Ghost of You', artist:'iamthevgod', genre:'', art:'', url:'https://dhatway.github.io/vgstudio/The%20Ghost%20of%20You.mp3', dur:'', plays:0, liked:false},
+  {title:'Try Ride My Wave and Get Wiped Out', artist:'iamthevgod', genre:'', art:'', url:'https://dhatway.github.io/vgstudio/Try%20Ride%20My%20Wave%20and%20Get%20Wiped%20Out.mp3', dur:'', plays:0, liked:false},
+  {title:'We Ain t Phony Kickin It', artist:'iamthevgod', genre:'', art:'', url:'https://dhatway.github.io/vgstudio/We%20Ain%20t%20Phony%20Kickin%20It.mp3', dur:'', plays:0, liked:false},
+  {title:'Your Loss My Lesson', artist:'iamthevgod', genre:'', art:'', url:'https://dhatway.github.io/vgstudio/Your%20Loss%20My%20Lesson.mp3', dur:'', plays:0, liked:false}
+];
+
+/* Seed library with preloaded tracks on first load */
+function seedPreloadedTracks() {
+  if (S.seeded) return; // only seed once ever
+  PRELOADED_TRACKS.forEach(t => {
+    const already = S.tracks.find(x => x.title === t.title);
+    if (!already) S.tracks.push(Object.assign({}, t, {id: Date.now() + Math.random()}));
+  });
+  S.seeded = true;
+  save();
+}
+
+/* Get playable URL for any track — works for both URL tracks and IndexedDB blobs */
 /* ─── INIT ─── */
 function init() {
   load();
@@ -1784,6 +1848,10 @@ function init() {
   });
   document.getElementById('vol-sl').value = S.vol * 100;
   aud.volume = S.vol;
+  // Seed catalog on first ever load
+  seedPreloadedTracks();
+  renderHome();
+  renderLibrary();
   // Save playback position every 5 seconds for session continuation
   setInterval(() => { if (S.playing && aud.currentTime > 0) save(); }, 5000);
   // Real-time stats refresh every 3 seconds
@@ -1973,6 +2041,7 @@ async function playAt(i) {
   const url = await getTrackURL(t);
   if (!url) { toast('⚠','File not available — re-import to play'); return; }
   aud.src = url;
+  aud.crossOrigin = 'anonymous';
   aud.load();
   aud.play().then(() => {
     initActx(); setPlaying(true);
@@ -2040,11 +2109,27 @@ function seekFromFeat(e){seekTo(getPct(e,document.getElementById('feat-prog-trac
 /* ─── VOLUME & EQ ─── */
 function initActx() {
   if (actx) return;
-  actx=new(window.AudioContext||window.webkitAudioContext)();
-  const src=actx.createMediaElementSource(aud);
-  gainNode=actx.createGain(); gainNode.gain.value=S.vol;
-  eqFilters=EQ_BANDS.map((b,i)=>{const f=actx.createBiquadFilter();f.type=i===0?'lowshelf':i===EQ_BANDS.length-1?'highshelf':'peaking';f.frequency.value=b.f;f.gain.value=0;return f;});
-  let prev=src; eqFilters.forEach(f=>{prev.connect(f);prev=f;}); prev.connect(gainNode); gainNode.connect(actx.destination);
+  try {
+    actx = new (window.AudioContext || window.webkitAudioContext)();
+    if (actx.state === 'suspended') actx.resume();
+    const src = actx.createMediaElementSource(aud);
+    gainNode = actx.createGain();
+    gainNode.gain.value = Math.min(1, S.vol || 0.8);
+    eqFilters = EQ_BANDS.map((b, i) => {
+      const f = actx.createBiquadFilter();
+      f.type = i === 0 ? 'lowshelf' : i === EQ_BANDS.length - 1 ? 'highshelf' : 'peaking';
+      f.frequency.value = b.f;
+      f.gain.value = 0;
+      return f;
+    });
+    let prev = src;
+    eqFilters.forEach(f => { prev.connect(f); prev = f; });
+    prev.connect(gainNode);
+    gainNode.connect(actx.destination);
+  } catch(e) {
+    console.warn('Web Audio init failed, using direct playback:', e);
+    actx = null; gainNode = null;
+  }
 }
 function setVol(v){S.vol=v/100;aud.volume=Math.min(1,S.vol);if(gainNode)gainNode.gain.value=S.boosted?Math.min(2,S.vol*2):S.vol;}
 function toggleBoost(){S.boosted=!S.boosted;document.getElementById('boost-btn').classList.toggle('on',S.boosted);if(gainNode)gainNode.gain.value=S.boosted?Math.min(2,S.vol*2):S.vol;toast('⚡',S.boosted?'Volume Boost ON':'Boost off');}
@@ -2682,15 +2767,34 @@ async function downloadTrackAt(i) {
   try {
     let url = await getTrackURL(t);
     if (!url) { toast('⚠','Audio not available for download'); return; }
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = (t.title || 'track').replace(/[^a-z0-9 _\-]/gi,'_') + '.mp3';
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    toast('✓', `Downloading "${t.title}"`);
+    const filename = (t.title || 'track').replace(/[^a-z0-9 _\-]/gi,'_') + '.mp3';
+    // For external URLs (GitHub), fetch as blob first so Android can save it
+    if (url.startsWith('http')) {
+      const resp = await fetch(url);
+      if (!resp.ok) throw new Error('Fetch failed');
+      const blob = await resp.blob();
+      const blobUrl = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = blobUrl;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      setTimeout(() => URL.revokeObjectURL(blobUrl), 5000);
+    } else {
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    }
+    toast('✓', 'Download started — check your Downloads folder');
   } catch(e) {
-    toast('⚠', 'Download failed');
+    // Fallback: open in new tab so user can long-press save
+    const url2 = await getTrackURL(t).catch(()=>null);
+    if (url2) { window.open(url2, '_blank'); toast('💾','Tap & hold the audio to save'); }
+    else toast('⚠', 'Download unavailable');
   }
 }
 
