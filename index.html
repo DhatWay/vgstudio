@@ -573,6 +573,101 @@ body::before {
 @media(min-width:768px){ .hero { padding:16px 32px 32px; } .featured-wrap, .tracklist-wrap { padding-left:24px; padding-right:24px; } .sec-label { padding:0 32px; } #fp-art { max-width:360px; } .fp-meta { padding:4px 36px 16px; } .fp-controls { padding:8px 32px 16px; } .fp-vol-section { padding:0 36px 12px; } .fp-prog-section { padding:0 36px 16px; } }
 
 /* ═══════════════════════════════════════════
+   ADMIN GATE OVERLAY
+═══════════════════════════════════════════ */
+#admin-gate-ovl {
+  position:fixed; inset:0; z-index:9998;
+  background:rgba(0,0,0,0.88);
+  backdrop-filter:blur(12px);
+  display:none; align-items:center; justify-content:center;
+  padding:24px;
+}
+#admin-gate-ovl.show { display:flex; }
+#admin-gate-box {
+  width:100%; max-width:340px;
+  background:var(--ink2);
+  border:1px solid var(--accentglow);
+  border-radius:22px;
+  padding:28px 24px;
+  box-shadow:var(--shadow-float), 0 0 60px var(--accentglow2);
+}
+.admin-gate-icon { font-size:36px; text-align:center; margin-bottom:12px; }
+.admin-gate-title { font-family:var(--font-display); font-size:22px; letter-spacing:.1em; color:var(--accent); text-align:center; margin-bottom:6px; }
+.admin-gate-sub { font-size:12px; color:var(--white3); text-align:center; margin-bottom:20px; line-height:1.5; }
+#admin-pass-input {
+  width:100%; padding:13px 16px;
+  border-radius:var(--r-sm);
+  border:1px solid rgba(255,255,255,0.1);
+  background:var(--ink4); color:var(--white);
+  font-size:15px; font-family:var(--font-body);
+  outline:none; box-sizing:border-box;
+  margin-bottom:10px;
+  transition:border-color .2s, box-shadow .2s;
+  letter-spacing:.08em;
+}
+#admin-pass-input:focus { border-color:var(--accentglow); box-shadow:0 0 0 3px var(--accentglow2); }
+#admin-pass-err { display:none; color:var(--red); font-size:12px; margin-bottom:10px; text-align:center; padding:8px 12px; background:rgba(224,80,80,0.08); border-radius:8px; border:1px solid rgba(224,80,80,0.2); }
+.admin-unlock-btn {
+  width:100%; height:48px; border-radius:var(--r-pill);
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
+  color:var(--ink); font-family:var(--font-display);
+  font-size:17px; letter-spacing:.12em;
+  box-shadow:0 4px 20px var(--accentglow);
+  margin-bottom:10px;
+  transition:opacity .2s, transform .2s var(--spring);
+}
+.admin-unlock-btn:active { transform:scale(.96); opacity:.85; }
+.admin-cancel-btn {
+  width:100%; height:40px; border-radius:var(--r-pill);
+  background:transparent; border:1px solid rgba(255,255,255,0.1);
+  color:var(--white3); font-size:13px;
+  transition:background .2s, color .2s;
+}
+.admin-cancel-btn:active { background:rgba(255,255,255,0.06); color:var(--white2); }
+@keyframes adminShake {
+  0%,100%{transform:translateX(0)} 20%{transform:translateX(-8px)} 40%{transform:translateX(8px)} 60%{transform:translateX(-6px)} 80%{transform:translateX(6px)}
+}
+#admin-gate-box.admin-shake { animation:adminShake .4s ease; }
+
+/* ═══════════════════════════════════════════
+   HOME PROFILE PICTURE
+═══════════════════════════════════════════ */
+.home-profile-row {
+  display:flex; align-items:center; gap:14px;
+  padding:0 24px 0;
+}
+#home-profile-pic {
+  width:52px; height:52px; border-radius:50%;
+  object-fit:cover; border:2px solid var(--accent);
+  box-shadow:0 0 20px var(--accentglow), 0 0 40px var(--accentglow2);
+  background:var(--ink3); flex-shrink:0;
+  display:none;
+}
+#home-profile-pic.loaded { display:block; }
+
+/* ═══════════════════════════════════════════
+   LIKES BUTTON
+═══════════════════════════════════════════ */
+.like-btn {
+  display:flex; align-items:center; gap:6px;
+  height:40px; padding:0 16px; border-radius:var(--r-pill);
+  border:1px solid rgba(255,255,255,0.08);
+  background:rgba(255,255,255,0.04);
+  font-size:11px; letter-spacing:.1em; text-transform:uppercase;
+  color:var(--white2); font-weight:500;
+  transition:background .2s, border-color .2s, color .2s, transform .2s var(--spring);
+}
+.like-btn:active { transform:scale(.92); }
+.like-btn.liked { background:rgba(240,80,120,0.15); border-color:rgba(240,80,120,0.4); color:#f05080; }
+.like-btn.like-pop { animation:likePop .35s var(--spring); }
+@keyframes likePop { 0%{transform:scale(1)} 50%{transform:scale(1.25)} 100%{transform:scale(1)} }
+
+/* Protected row indicator */
+.settings-row.admin-locked .settings-row-label::after {
+  content:' 🔒'; font-size:10px; opacity:.6;
+}
+
+/* ═══════════════════════════════════════════
    VIDEO GENERATION (AI — plug & play ready)
 ═══════════════════════════════════════════ */
 #pg-videos .topbar { justify-content:space-between; }
@@ -811,9 +906,14 @@ body::before {
       </div>
     </div>
     <div class="hero">
-      <div class="hero-greeting">Good evening,</div>
-      <div class="hero-name">iam<br><em>theVgod</em></div>
-      <div class="hero-sub">Your studio. Your sound. Your world.</div>
+      <div class="home-profile-row">
+        <img id="home-profile-pic" src="" alt="Profile" onerror="this.style.display='none'">
+        <div>
+          <div class="hero-greeting">Good evening,</div>
+          <div class="hero-name">iam<br><em>theVgod</em></div>
+        </div>
+      </div>
+      <div class="hero-sub" style="margin-top:8px;">Your studio. Your sound. Your world.</div>
     </div>
     <div class="featured-wrap">
       <div class="featured-card" id="feat-card" onclick="openFullPlayer()">
@@ -845,6 +945,8 @@ body::before {
       <div class="stat-pill"><div class="stat-num" id="s-plays">0</div><div class="stat-name">Plays</div></div>
       <div class="stat-pill"><div class="stat-num" id="s-videos">0</div><div class="stat-name">Videos</div></div>
       <div class="stat-pill"><div class="stat-num" id="s-shares">0</div><div class="stat-name">Shares</div></div>
+      <div class="stat-pill"><div class="stat-num" id="s-downloads">0</div><div class="stat-name">Downloads</div></div>
+      <div class="stat-pill"><div class="stat-num" id="s-likes">0</div><div class="stat-name">Likes</div></div>
     </div>
     <div class="sec-label" id="home-lib-label" style="margin-top:4px;">Library</div>
     <div class="tracklist-wrap" style="padding-bottom:8px;">
@@ -1009,6 +1111,17 @@ body::before {
         <div style="font-family:var(--font-display);font-size:32px;letter-spacing:.04em;color:var(--accent);" id="an-videos">0</div>
       </div>
     </div>
+    <!-- Downloads + Likes row -->
+    <div style="display:flex;gap:10px;padding:0 16px 14px;">
+      <div style="flex:1;background:var(--ink3);border:1px solid rgba(255,255,255,0.06);border-radius:var(--r-card);box-shadow:var(--shadow-card);padding:16px;">
+        <div style="font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--white3);margin-bottom:6px;">Downloads</div>
+        <div style="font-family:var(--font-display);font-size:32px;letter-spacing:.04em;color:var(--accent);" id="an-downloads">0</div>
+      </div>
+      <div style="flex:1;background:var(--ink3);border:1px solid rgba(255,255,255,0.06);border-radius:var(--r-card);box-shadow:var(--shadow-card);padding:16px;">
+        <div style="font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--white3);margin-bottom:6px;">Likes</div>
+        <div style="font-family:var(--font-display);font-size:32px;letter-spacing:.04em;color:var(--accent);" id="an-likes">0</div>
+      </div>
+    </div>
     <!-- Top tracks -->
     <div class="analytics-card">
       <div class="analytics-card-header"><span class="analytics-card-title">Top Tracks</span></div>
@@ -1158,11 +1271,11 @@ body::before {
     <div class="settings-section">
       <div class="settings-section-title">Data</div>
       <div class="settings-card">
-        <div class="settings-row" style="cursor:pointer;" onclick="confirmClearLibrary()">
+        <div class="settings-row admin-locked" style="cursor:pointer;" onclick="requireAdmin(()=>confirmClearLibrary())">
           <div><div class="settings-row-label" style="color:var(--red);">Clear Library</div><div class="settings-row-sub">Remove all tracks from cache</div></div>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="18" height="18" style="color:var(--white3);flex-shrink:0;"><polyline points="9 18 15 12 9 6"/></svg>
         </div>
-        <div class="settings-row" style="cursor:pointer;" onclick="confirmClearAll()">
+        <div class="settings-row admin-locked" style="cursor:pointer;" onclick="requireAdmin(()=>confirmClearAll())">
           <div><div class="settings-row-label" style="color:var(--red);">Reset Everything</div><div class="settings-row-sub">Wipe all data and preferences</div></div>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="18" height="18" style="color:var(--white3);flex-shrink:0;"><polyline points="9 18 15 12 9 6"/></svg>
         </div>
@@ -1196,15 +1309,15 @@ body::before {
     <div class="settings-section">
       <div class="settings-section-title">Tools</div>
       <div class="settings-card">
-        <div class="settings-row" style="cursor:pointer;" onclick="navigate('pg-videos','nb-analytics')">
+        <div class="settings-row admin-locked" style="cursor:pointer;" onclick="requireAdmin(()=>navigate('pg-videos','nb-analytics'))">
           <div><div class="settings-row-label">AI Video Studio</div><div class="settings-row-sub">Generate music videos with AI</div></div>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="18" height="18" style="color:var(--white3);"><polyline points="9 18 15 12 9 6"/></svg>
         </div>
-        <div class="settings-row" style="cursor:pointer;" onclick="navigate('pg-plugins','nb-settings')">
+        <div class="settings-row admin-locked" style="cursor:pointer;" onclick="requireAdmin(()=>navigate('pg-plugins','nb-settings'))">
           <div><div class="settings-row-label">Plugins</div><div class="settings-row-sub">Extend your studio with add-ons</div></div>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="18" height="18" style="color:var(--white3);"><polyline points="9 18 15 12 9 6"/></svg>
         </div>
-        <div class="settings-row" style="cursor:pointer;" onclick="navigate('pg-profile','nb-settings')">
+        <div class="settings-row admin-locked" style="cursor:pointer;" onclick="requireAdmin(()=>navigate('pg-profile','nb-settings'))">
           <div><div class="settings-row-label">Artist Profile</div><div class="settings-row-sub">Edit name, bio, social links</div></div>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="18" height="18" style="color:var(--white3);"><polyline points="9 18 15 12 9 6"/></svg>
         </div>
@@ -1284,6 +1397,10 @@ body::before {
       <div class="fp-tags" id="fp-tags"></div>
     </div>
     <div class="fp-actions">
+      <button class="fp-action-btn like-btn" id="fp-like-btn" onclick="likeCurrentTrack(this)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14" id="fp-like-ico"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        Like
+      </button>
       <button class="fp-action-btn" onclick="addToPlaylistMenu()">+ Playlist</button>
       <button class="fp-action-btn" onclick="openTagArtEditor()">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
@@ -1966,6 +2083,64 @@ function saveSetting(key, val) {
   save();
 }
 
+/* ═══════════════════════════════════════════
+   ADMIN PASSWORD SYSTEM
+═══════════════════════════════════════════ */
+const ADMIN_PASSWORD = 'vgod2024'; // Change this to your password
+let _adminCb = null;
+
+function requireAdmin(callback) {
+  _adminCb = callback;
+  document.getElementById('admin-pass-input').value = '';
+  document.getElementById('admin-pass-err').style.display = 'none';
+  document.getElementById('admin-gate-ovl').classList.add('show');
+  setTimeout(() => document.getElementById('admin-pass-input').focus(), 200);
+}
+
+function submitAdminPassword() {
+  const val = document.getElementById('admin-pass-input').value;
+  if (val === ADMIN_PASSWORD) {
+    document.getElementById('admin-gate-ovl').classList.remove('show');
+    if (_adminCb) { _adminCb(); _adminCb = null; }
+  } else {
+    const errEl = document.getElementById('admin-pass-err');
+    errEl.textContent = '✗ Incorrect password. Access denied.';
+    errEl.style.display = 'block';
+    document.getElementById('admin-pass-input').value = '';
+    document.getElementById('admin-pass-input').focus();
+    const box = document.getElementById('admin-gate-box');
+    box.classList.remove('admin-shake');
+    void box.offsetWidth;
+    box.classList.add('admin-shake');
+    setTimeout(() => box.classList.remove('admin-shake'), 500);
+  }
+}
+
+function closeAdminGate() {
+  document.getElementById('admin-gate-ovl').classList.remove('show');
+  _adminCb = null;
+}
+
+/* ═══════════════════════════════════════════
+   LIKES SYSTEM
+═══════════════════════════════════════════ */
+function likeCurrentTrack(btn) {
+  if (S.idx < 0) { toast('⚠', 'No track playing'); return; }
+  S.likes = (S.likes || 0) + 1;
+  if (!S.trackLikes) S.trackLikes = {};
+  const t = S.tracks[S.idx];
+  if (t) S.trackLikes[t.id] = (S.trackLikes[t.id] || 0) + 1;
+  updateStats(); save();
+  // Animate button
+  if (btn) {
+    btn.classList.add('liked', 'like-pop');
+    const ico = document.getElementById('fp-like-ico');
+    if (ico) ico.setAttribute('fill', '#f05080');
+    setTimeout(() => btn && btn.classList.remove('like-pop'), 400);
+  }
+  toast('❤️', 'Liked!');
+}
+
 /* ─── SETTINGS RENDER ─── */
 function renderSettings() {
   // Sync toggles
@@ -2620,6 +2795,11 @@ function syncProfileToGate() {
   // Update hero greeting name
   const heroName = document.querySelector('.hero-name em');
   if (heroName && p.name) heroName.textContent = p.name;
+  // Sync home profile pic
+  if (p.avatar) {
+    const homeAvEl = document.getElementById('home-profile-pic');
+    if (homeAvEl) { homeAvEl.src = p.avatar; homeAvEl.classList.add('loaded'); }
+  }
 }
 function updateAvatar(input){
   const f=input.files[0];if(!f)return;
@@ -2628,6 +2808,9 @@ function updateAvatar(input){
     document.getElementById('prof-av').src=e.target.result;
     const gav=document.getElementById('cg-avatar-img');
     if(gav) gav.src=e.target.result;
+    // Sync home profile pic
+    const homeAvEl=document.getElementById('home-profile-pic');
+    if(homeAvEl){homeAvEl.src=e.target.result;homeAvEl.classList.add('loaded');}
     save();toast('✓','Avatar updated');
   };
   r.readAsDataURL(f);
@@ -2657,6 +2840,18 @@ function updateStats(){
   document.getElementById('s-plays').textContent=S.plays;
   document.getElementById('s-videos').textContent=S.videos.length;
   document.getElementById('s-shares').textContent=S.shares;
+  const dlEl=document.getElementById('s-downloads'); if(dlEl) dlEl.textContent=S.downloads||0;
+  const lkEl=document.getElementById('s-likes'); if(lkEl) lkEl.textContent=S.likes||0;
+  syncHomeProfilePic();
+}
+
+function syncHomeProfilePic() {
+  const av = S.profile?.avatar;
+  if (!av) return;
+  const homeAvEl = document.getElementById('home-profile-pic');
+  if (homeAvEl) { homeAvEl.src = av; homeAvEl.classList.add('loaded'); }
+  const gav = document.getElementById('cg-avatar-img');
+  if (gav) gav.src = av;
 }
 
 /* ─── OVERLAY ─── */
@@ -2689,6 +2884,10 @@ function load() {
     if (!S.settings.homeLayout) S.settings.homeLayout = {stats:true,featured:true,library:true};
     S.tracks.forEach(t => { if (t.url === '__blob__') t.url = null; });
     if (!S.trackEQ) S.trackEQ = {};
+    if (!S.downloads) S.downloads = 0;
+    if (!S.likes) S.likes = 0;
+    if (!S.trackLikes) S.trackLikes = {};
+    if (!S.trackDownloads) S.trackDownloads = {};
   } catch(e) {}
   updateStats();
 }
@@ -2768,30 +2967,27 @@ async function downloadTrackAt(i) {
     let url = await getTrackURL(t);
     if (!url) { toast('⚠','Audio not available for download'); return; }
     const filename = (t.title || 'track').replace(/[^a-z0-9 _\-]/gi,'_') + '.mp3';
-    // For external URLs (GitHub), fetch as blob first so Android can save it
     if (url.startsWith('http')) {
       const resp = await fetch(url);
       if (!resp.ok) throw new Error('Fetch failed');
       const blob = await resp.blob();
       const blobUrl = URL.createObjectURL(blob);
       const a = document.createElement('a');
-      a.href = blobUrl;
-      a.download = filename;
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
+      a.href = blobUrl; a.download = filename;
+      document.body.appendChild(a); a.click(); document.body.removeChild(a);
       setTimeout(() => URL.revokeObjectURL(blobUrl), 5000);
     } else {
       const a = document.createElement('a');
-      a.href = url;
-      a.download = filename;
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
+      a.href = url; a.download = filename;
+      document.body.appendChild(a); a.click(); document.body.removeChild(a);
     }
+    // Track download count
+    S.downloads = (S.downloads || 0) + 1;
+    if (!S.trackDownloads) S.trackDownloads = {};
+    S.trackDownloads[t.id] = (S.trackDownloads[t.id] || 0) + 1;
+    updateStats(); save();
     toast('✓', 'Download started — check your Downloads folder');
   } catch(e) {
-    // Fallback: open in new tab so user can long-press save
     const url2 = await getTrackURL(t).catch(()=>null);
     if (url2) { window.open(url2, '_blank'); toast('💾','Tap & hold the audio to save'); }
     else toast('⚠', 'Download unavailable');
@@ -3343,6 +3539,8 @@ function renderAnalytics() {
   document.getElementById('an-shares').textContent = S.shares || 0;
   document.getElementById('an-tracks').textContent = S.tracks.length;
   document.getElementById('an-videos').textContent = (S.videos || []).length;
+  const anDl = document.getElementById('an-downloads'); if(anDl) anDl.textContent = S.downloads || 0;
+  const anLk = document.getElementById('an-likes'); if(anLk) anLk.textContent = S.likes || 0;
 
   // Delta label
   const delta = document.getElementById('an-plays-delta');
@@ -3443,6 +3641,8 @@ function renderSessionStats() {
     { label: 'Library Size', value: S.tracks.length + ' tracks' },
     { label: 'Videos Generated', value: (S.videos||[]).length },
     { label: 'Total Shares', value: S.shares || 0 },
+    { label: 'Total Downloads', value: S.downloads || 0 },
+    { label: 'Total Likes', value: S.likes || 0 },
   ].map(row => `
     <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.04);">
       <span style="font-size:12px;color:var(--white3);">${row.label}</span>
@@ -3901,10 +4101,14 @@ init();
   loadTrendyToggles();
   applyTrendySettings();
   // Ensure new state fields exist
-  if (!S.plugins)    { S.plugins = {}; }
-  if (!S.trackPlays) { S.trackPlays = {}; }
-  if (!S.playLog)    { S.playLog = {}; }
-  if (!S.trendy)     { S.trendy = { visualizer:false, pulse:false, particles:false, colorsync:false }; }
+  if (!S.plugins)         { S.plugins = {}; }
+  if (!S.trackPlays)      { S.trackPlays = {}; }
+  if (!S.playLog)         { S.playLog = {}; }
+  if (!S.trendy)          { S.trendy = { visualizer:false, pulse:false, particles:false, colorsync:false }; }
+  if (!S.downloads)       { S.downloads = 0; }
+  if (!S.likes)           { S.likes = 0; }
+  if (!S.trackLikes)      { S.trackLikes = {}; }
+  if (!S.trackDownloads)  { S.trackDownloads = {}; }
   // Wire visualizer + pulse to audio events
   const audEl = document.getElementById('aud');
   audEl.addEventListener('play', () => {
@@ -3924,5 +4128,18 @@ init();
   });
 })();
 </script>
+<!-- ════ ADMIN GATE ════ -->
+<div id="admin-gate-ovl">
+  <div id="admin-gate-box">
+    <div class="admin-gate-icon">🔒</div>
+    <div class="admin-gate-title">ADMIN ACCESS</div>
+    <div class="admin-gate-sub">This feature is restricted.<br>Enter the admin password to continue.</div>
+    <input id="admin-pass-input" type="password" placeholder="Admin password" onkeydown="if(event.key==='Enter')submitAdminPassword()">
+    <div id="admin-pass-err"></div>
+    <button class="admin-unlock-btn" onclick="submitAdminPassword()">UNLOCK</button>
+    <button class="admin-cancel-btn" onclick="closeAdminGate()">Cancel</button>
+  </div>
+</div>
+
 </body>
 </html>
