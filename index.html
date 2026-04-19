@@ -4079,6 +4079,101 @@ async function importFilesArray(files, statusEl) {
 }
 
 /* ─── SERVICE WORKER ─── */
+And paste this entire block right above it:
+/* ═══════════════════════════════════════════
+   FIREBASE REALTIME STATS
+═══════════════════════════════════════════ */
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getFirestore, doc, setDoc, getDoc, updateDoc, increment, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBdGXGozxzhMFvlUCspIkPolOrpGzm7tg4",
+  authDomain: "vgstudio-b790c.firebaseapp.com",
+  projectId: "vgstudio-b790c",
+  storageBucket: "vgstudio-b790c.firebasestorage.app",
+  messagingSenderId: "573562601997",
+  appId: "1:573562601997:web:1e46e2cef069e2f8444b44",
+  measurementId: "G-MNK6XBKNG4"
+};
+
+const fbApp = initializeApp(firebaseConfig);
+const db = getFirestore(fbApp);
+
+// Global stats doc reference
+const statsRef = doc(db, 'stats', 'global');
+
+// Initialize stats doc if it doesn't exist
+async function initFirebaseStats() {
+  try {
+    const snap = await getDoc(statsRef);
+    if (!snap.exists()) {
+      await setDoc(statsRef, { plays: 0, downloads: 0, likes: 0, tracks: {} });
+    }
+    // Listen for real-time updates and push to dashboard
+    onSnapshot(statsRef, (snap) => {
+      if (!snap.exists()) return;
+      const data = snap.data();
+      // Update stat counters in the analytics page
+      const el = (id) => document.getElementById(id);
+      if (el('s-plays'))     el('s-plays').textContent     = data.plays     || 0;
+      if (el('s-downloads')) el('s-downloads').textContent = data.downloads || 0;
+      if (el('s-likes'))     el('s-likes').textContent     = data.likes     || 0;
+      // Update top tracks if on analytics page
+      if (document.getElementById('pg-analytics')?.classList.contains('active')) {
+        renderFirebaseTopTracks(data.tracks || {});
+      }
+    });
+  } catch(e) { console.warn('Firebase init failed', e); }
+}
+
+// Record a play to Firebase
+async function fbRecordPlay(trackTitle) {
+  try {
+    await updateDoc(statsRef, {
+      plays: increment(1),
+      [`tracks.${trackTitle.replace(/[^a-zA-Z0-9]/g,'_')}.plays`]: increment(1)
+    });
+  } catch(e) {}
+}
+
+// Record a download to Firebase
+async function fbRecordDownload(trackTitle) {
+  try {
+    await updateDoc(statsRef, {
+      downloads: increment(1),
+      [`tracks.${trackTitle.replace(/[^a-zA-Z0-9]/g,'_')}.downloads`]: increment(1)
+    });
+  } catch(e) {}
+}
+
+// Record a like to Firebase
+async function fbRecordLike(trackTitle) {
+  try {
+    await updateDoc(statsRef, {
+      likes: increment(1),
+      [`tracks.${trackTitle.replace(/[^a-zA-Z0-9]/g,'_')}.likes`]: increment(1)
+    });
+  } catch(e) {}
+}
+
+// Render top tracks in analytics page from Firebase data
+function renderFirebaseTopTracks(tracks) {
+  const el = document.getElementById('top-tracks-list');
+  if (!el) return;
+  const sorted = Object.entries(tracks)
+    .map(([key, val]) => ({ title: key.replace(/_/g,' '), plays: val.plays || 0, downloads: val.downloads || 0 }))
+    .sort((a, b) => b.plays - a.plays)
+    .slice(0, 10);
+  if (!sorted.length) { el.innerHTML = '<div style="padding:20px;text-align:center;color:var(--white3);font-size:13px;">No plays yet</div>'; return; }
+  el.innerHTML = sorted.map((t, i) => `
+    <div style="display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid rgba(255,255,255,0.05);">
+      <span style="font-size:11px;color:var(--white3);width:18px;">${i+1}</span>
+      <div style="flex:1;min-width:0;">
+        <div style="font-size:13px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${escHtml(t.title)}</div>
+        <div style="font-size:11px;color:var(--white3);">${t.plays} plays · ${t.downloads} downloads</div>
+      </div>
+    </div>`).join('');
+}                                                           
 if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js').catch(()=>{});}
 
 /* ─── GO ─── */
