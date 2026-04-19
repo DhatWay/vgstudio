@@ -1933,7 +1933,6 @@ const PRELOADED_TRACKS = [
 
 /* Seed library with preloaded tracks on first load */
 function seedPreloadedTracks() {
-  if (S.seeded) return; // only seed once ever
   PRELOADED_TRACKS.forEach(t => {
     const already = S.tracks.find(x => x.title === t.title);
     if (!already) S.tracks.push(Object.assign({}, t, {id: Date.now() + Math.random()}));
