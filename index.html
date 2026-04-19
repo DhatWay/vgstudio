@@ -2215,8 +2215,8 @@ async function playAt(i) {
   S.idx = i;
   const url = await getTrackURL(t);
   if (!url) { toast('⚠','File not available — re-import to play'); return; }
-  aud.src = url;
   aud.crossOrigin = 'anonymous';
+aud.src = url;
   aud.load();
   aud.play().then(() => {
     initActx(); setPlaying(true);
